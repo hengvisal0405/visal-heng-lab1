@@ -9,9 +9,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [18.x]  # Use 18 only
 
     steps:
       - name: Checkout code
@@ -22,6 +23,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+
+      - name: Check Node version
+        run: node -v
+
+      - name: Check NPM version
+        run: npm -v
+
+      - name: List project files
+        run: ls -R
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
